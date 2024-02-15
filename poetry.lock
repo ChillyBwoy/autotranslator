@@ -24,12 +24,12 @@ files = [
 
 [[package]]
 name = "googletrans"
-version = "3.0.0"
+version = "4.0.0rc1"
 description = "Free Google Translate API for Python. Translates totally free of charge."
 optional = false
-python-versions = "*"
+python-versions = ">=3.6"
 files = [
-    {file = "googletrans-3.0.0.tar.gz", hash = "sha256:44caeea42d91ff6ead5c2d49db2b88de66c45c2fe874c8ec03eb9b4ceb3a533d"},
+    {file = "googletrans-4.0.0rc1.tar.gz", hash = "sha256:74df47b092e2d566522019d149e3f1d75732570ad76eaf8e14aebeffc126c372"},
 ]
 
 [package.dependencies]
@@ -169,4 +169,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "c8f8fd3b859553473d1dbcc7471691a76d3c56ae1df7b743ca2f1599f9b34b17"
+content-hash = "d2b44abdc9c3753f60d65ad5eb9e8b45031a3c068d16485b62848cb3bfe816b2"
