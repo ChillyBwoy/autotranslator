@@ -5,7 +5,9 @@ from googletrans import Translator
 translator = Translator()
 
 parser = argparse.ArgumentParser(prog="AutoTranslator")
-parser.add_argument("filename")
+parser.add_argument("filename", help="CSV file to translate")
+parser.add_argument("-s", "--src", help="Language to translate from", required=True)
+parser.add_argument("-d", "--dest", help="Language to translate to", required=True)
 
 args = parser.parse_args()
 
@@ -44,7 +46,9 @@ with open(args.filename, "r") as csv_file:
             continue
 
         try:
-            translation = translator.translate(to_translate, src="ja", dest="en")
+            translation = translator.translate(
+                to_translate, src=args.src, dest=args.dest
+            )
             translation = str(translation.text).split("\n")
             translation = "\n".join(translation)
             translation = translation.capitalize()
