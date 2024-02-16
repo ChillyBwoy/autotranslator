@@ -16,6 +16,12 @@ with open(args.filename, "r") as csv_file:
     translated_rows: list[list[str]] = []
 
     for idx, row in enumerate(csv_reader):
+        to_translate = row[0].strip()
+        translated = row[1].strip()
+
+        if translated != "":
+            translated_dict[to_translate] = translated
+
         translated_rows.append(row)
 
     for idx, row in enumerate(translated_rows):
@@ -39,7 +45,8 @@ with open(args.filename, "r") as csv_file:
 
         try:
             translation = translator.translate(to_translate, src="ja", dest="en")
-            translation = str(translation.text)
+            translation = str(translation.text).split("\n")
+            translation = "\n".join(translation)
             translation = translation.capitalize()
 
             row[1] = translation
@@ -51,5 +58,7 @@ with open(args.filename, "r") as csv_file:
         translated_rows[idx] = row
 
 with open(args.filename, "w", newline="") as new_file:
-    csv_writer = csv.writer(new_file, delimiter=";", lineterminator="\n")
+    csv_writer = csv.writer(
+        new_file, delimiter=";", lineterminator="\n", quoting=csv.QUOTE_MINIMAL
+    )
     csv_writer.writerows(translated_rows)
