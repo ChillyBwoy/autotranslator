@@ -7,14 +7,15 @@ translator = Translator()
 parser = argparse.ArgumentParser(prog="AutoTranslator")
 parser.add_argument("filename", help="CSV file to translate")
 parser.add_argument("-s", "--src", help="Language to translate from", required=True)
-parser.add_argument("-d", "--dest", help="Language to translate to", required=True)
+parser.add_argument("-t", "--target", help="Language to translate to", required=True)
+parser.add_argument("-d", "--delimiter", help="CSV Delimiter", default=",")
 
 args = parser.parse_args()
 
 translated_dict: dict[str, str] = {}
 
 with open(args.filename, "r") as csv_file:
-    csv_reader = csv.reader(csv_file, delimiter=";")
+    csv_reader = csv.reader(csv_file, delimiter=",")
     translated_rows: list[list[str]] = []
 
     for idx, row in enumerate(csv_reader):
@@ -47,7 +48,7 @@ with open(args.filename, "r") as csv_file:
 
         try:
             translation = translator.translate(
-                to_translate, src=args.src, dest=args.dest
+                to_translate, src=args.src, dest=args.target
             )
             translation = str(translation.text).split("\n")
             translation = "\n".join(translation)
@@ -63,6 +64,6 @@ with open(args.filename, "r") as csv_file:
 
 with open(args.filename, "w", newline="") as new_file:
     csv_writer = csv.writer(
-        new_file, delimiter=";", lineterminator="\n", quoting=csv.QUOTE_MINIMAL
+        new_file, delimiter=",", lineterminator="\n", quoting=csv.QUOTE_ALL
     )
     csv_writer.writerows(translated_rows)
